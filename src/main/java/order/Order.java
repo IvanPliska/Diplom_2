@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Order {
 
-    String id;
+   private String ingredients;
 }

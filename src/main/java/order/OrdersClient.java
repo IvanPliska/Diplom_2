@@ -18,8 +18,21 @@ public class OrdersClient extends Client {
     private final io.restassured.filter.Filter requestFilter = new RequestLoggingFilter();
     private final Filter responseFiler = new ResponseLoggingFilter();
 
-    @Step("Create new order")
-    public ValidatableResponse createOrder(Order order) {
+    @Step("Create new order with token")
+    public ValidatableResponse createOrderWithToken(Order order, String token) {
+        return given()
+                .with()
+                .filters(requestFilter, responseFiler)
+                .spec(getSpec())
+                .body(order)
+                .when()
+                .auth().oauth2(token)
+                .post(PATH_ORDER)
+                .then();
+    }
+
+    @Step("Create new order without token")
+    public ValidatableResponse createOrderWithoutToken(Order order) {
         return given()
                 .with()
                 .filters(requestFilter, responseFiler)
@@ -30,8 +43,21 @@ public class OrdersClient extends Client {
                 .then();
     }
 
-    @Step("Get orders")
-    public ValidatableResponse getOrders(Order order) {
+    @Step("Get orders user")
+    public ValidatableResponse getOrdersUserWithToken(Order order, String token) {
+        return given()
+                .with()
+                .filters(requestFilter, responseFiler)
+                .spec(getSpec())
+                .body(order)
+                .when()
+                .auth().oauth2(token)
+                .get(PATH_ORDER)
+                .then();
+    }
+
+    @Step("Get orders user without token")
+    public ValidatableResponse getOrdersUserWithoutToken(Order order) {
         return given()
                 .with()
                 .filters(requestFilter, responseFiler)

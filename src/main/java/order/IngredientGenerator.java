@@ -1,34 +1,50 @@
 package order;
 
+import io.qameta.allure.Step;
+import user.User;
+
 import java.util.Random;
 
 public class IngredientGenerator {
 
-    public static String generateBun() {
-        String[] id = new String[]{
+
+    @Step("Create new order with bun")
+    public static Order generateBun() {
+        String[] ingredients = new String[]{
                 "61c0c5a71d1f82001bdaaa6d",
                 "61c0c5a71d1f82001bdaaa6c"};
-        return id[new Random().nextInt(id.length)];
+        return new Order(ingredients[new Random().nextInt(ingredients.length)]);
     }
 
-    public static String generateMain() {
-        String[] id = new String[]{
+    @Step("Create new order with main")
+    public static Order generateMain() {
+        String[] ingredients = new String[]{
                 "61c0c5a71d1f82001bdaaa6f", "61c0c5a71d1f82001bdaaa70",
                 "61c0c5a71d1f82001bdaaa71", "61c0c5a71d1f82001bdaaa6e",
                 "61c0c5a71d1f82001bdaaa76", "61c0c5a71d1f82001bdaaa77",
                 "61c0c5a71d1f82001bdaaa78", "61c0c5a71d1f82001bdaaa79",
                 "61c0c5a71d1f82001bdaaa7a"};
-        return id[new Random().nextInt(id.length)];
+        return new Order(ingredients[new Random().nextInt(ingredients.length)]);
     }
 
-    public static String generateSauce() {
-        String[] id = new String[]{
+    @Step("Create new order with sauce")
+    public static Order generateSauce() {
+        String[] ingredients = new String[]{
                 "61c0c5a71d1f82001bdaaa72", "61c0c5a71d1f82001bdaaa73",
                 "61c0c5a71d1f82001bdaaa74", "61c0c5a71d1f82001bdaaa75"};
-        return id[new Random().nextInt(id.length)];
+        return new Order(ingredients[new Random().nextInt(ingredients.length)]);
     }
 
-    public static String generateIngredient() {
-        return generateBun() + generateMain() + generateSauce();
+    @Step("Create new order with null")
+    public static Order generateNull() {
+        String ingredients = "";
+        return new Order(ingredients);
     }
+
+    @Step("Create new order with false ingredient")
+    public static Order generateFalseIngredient() {
+        String ingredients = "888888888888888888888";
+        return new Order(ingredients);
+    }
+
 }
