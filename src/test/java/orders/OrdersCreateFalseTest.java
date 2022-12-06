@@ -2,6 +2,7 @@ package orders;
 
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
+import lombok.SneakyThrows;
 import order.IngredientGenerator;
 import order.Order;
 import order.OrdersClient;
@@ -11,6 +12,8 @@ import org.junit.Test;
 import user.User;
 import user.UserClient;
 import user.UserGenerator;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.apache.http.HttpStatus.*;
 import static org.junit.Assert.assertEquals;
@@ -24,8 +27,10 @@ public class OrdersCreateFalseTest {
 
     String token;
 
+    @SneakyThrows
     @Before
     public void setUp() {
+        TimeUnit.SECONDS.sleep(3);
         userClient = new UserClient();
         user = UserGenerator.generateDefaultUser();
         ordersClient = new OrdersClient();

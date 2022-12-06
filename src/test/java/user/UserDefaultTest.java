@@ -2,9 +2,12 @@ package user;
 
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
+import lombok.SneakyThrows;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.apache.http.HttpStatus.*;
 import static org.junit.Assert.assertEquals;
@@ -15,8 +18,10 @@ public class UserDefaultTest {
     String token;
 
 
+    @SneakyThrows
     @Before
     public void setUp() {
+        TimeUnit.SECONDS.sleep(3);
         userClient = new UserClient();
         user = UserGenerator.generateDefaultUser();
 
