@@ -16,14 +16,14 @@ public class LoginGenerator {
 
     public static Credentials getWithPasswordOnly() {
         String randomPassword = faker.numerify("####");
-        String randomLogin = "";
+        String randomLogin = " ";
         return new Credentials(randomLogin, randomPassword);
 
     }
 
     public static Credentials getEmptyBoxUser() {
-        String randomPassword = "";
-        String randomLogin = "";
+        String randomPassword = " ";
+        String randomLogin = " ";
         return new Credentials(randomLogin, randomPassword);
 
     }
