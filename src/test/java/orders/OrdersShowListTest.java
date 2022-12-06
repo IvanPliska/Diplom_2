@@ -43,7 +43,7 @@ public class OrdersShowListTest {
     @DisplayName("Show orders with authorisation user")
     @Test
     public void orderCanNotBeCreatedWithAuthorisation() {
-        ValidatableResponse responseShowOrders = ordersClient.getOrdersUserWithToken(order,token);
+        ValidatableResponse responseShowOrders = ordersClient.getOrdersUserWithToken(order, token);
         boolean isOrderCreated = responseShowOrders.extract().path("success");
         int statusCode = responseShowOrders.extract().statusCode();
 

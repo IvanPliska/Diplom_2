@@ -2,6 +2,7 @@ package orders;
 
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
+import lombok.SneakyThrows;
 import order.IngredientGenerator;
 import order.Order;
 import order.OrdersClient;
@@ -11,6 +12,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import user.*;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.junit.Assert.assertEquals;
@@ -27,8 +30,10 @@ public class OrdersCreateParameterizedTest {
     int statusCode;
     String token;
 
+    @SneakyThrows
     @Before
     public void setUp() {
+        TimeUnit.SECONDS.sleep(3); //исключение ошибки "429 (too many requests)"
         userClient = new UserClient();
         user = UserGenerator.generateDefaultUser();
         ordersClient = new OrdersClient();
@@ -52,17 +57,16 @@ public class OrdersCreateParameterizedTest {
         return new Object[][]{
                 {IngredientGenerator.generateBun(), SC_OK, true, UserGenerator.generateDefaultUser()},
                 {IngredientGenerator.generateMain(), SC_OK, true, UserGenerator.generateDefaultUser()},
-                {IngredientGenerator.generateSauce(),SC_OK, true, UserGenerator.generateDefaultUser()},
+                {IngredientGenerator.generateSauce(), SC_OK, true, UserGenerator.generateDefaultUser()},
         };
     }
-
 
     @DisplayName("Created new order")
     @Test
     public void orderBunCanBeCreated() {
         ValidatableResponse responseCreate = userClient.createUser(user);
         token = responseCreate.extract().path("accessToken").toString().substring(7);
-        ValidatableResponse responseCreateOrder = ordersClient.createOrderWithToken(order,token);
+        ValidatableResponse responseCreateOrder = ordersClient.createOrderWithToken(order, token);
         boolean isOrderCreated = responseCreateOrder.extract().path("success");
         int statusCode = responseCreateOrder.extract().statusCode();
 

@@ -2,11 +2,15 @@ package user;
 
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
+import lombok.SneakyThrows;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+
+import java.sql.Time;
+import java.util.concurrent.TimeUnit;
 
 import static org.apache.http.HttpStatus.*;
 import static org.junit.Assert.assertEquals;
@@ -23,14 +27,17 @@ public class UserLoginParameterizedTest {
     private String token;
 
 
+    @SneakyThrows
     @Before
     public void setUp(){
+        TimeUnit.SECONDS.sleep(3); //исключение ошибки "429 (too many requests)"
         userClient = new UserClient();
     }
 
     @After
     public void cleanUp() {
-        userClient.deleteUser(token);}
+        userClient.deleteUser(token);
+    }
 
     public UserLoginParameterizedTest(Credentials credentials, int statusCode, String massage, User user) {
         this.credentials = credentials;
