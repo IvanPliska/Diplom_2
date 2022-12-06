@@ -14,7 +14,7 @@ public class UserClient extends Client {
     private static final String PATH_CREATE = "/api/auth/register";
     private static final String PATH_LOGIN = "/api/auth/login";
     private static final String PATH_CHANGE = "/api/auth/user";
-
+    private static final String PATH_DELETE = "/api/auth/user";
     private final io.restassured.filter.Filter requestFilter = new RequestLoggingFilter();
     private final Filter responseFiler = new ResponseLoggingFilter();
 
@@ -43,14 +43,40 @@ public class UserClient extends Client {
     }
 
     @Step("Change user")
-    public ValidatableResponse changeUser(User user) {
+    public ValidatableResponse changeUserWithToken(User user, String token) {
         return given()
                 .with()
                 .filters(requestFilter, responseFiler)
                 .spec(getSpec())
                 .body(user)
                 .when()
-                .post(PATH_CHANGE)
+                .auth().oauth2(token)
+                .patch(PATH_CHANGE)
+                .then();
+    }
+
+    @Step("Change user without token")
+    public ValidatableResponse changeUserWithoutToken(User user) {
+        return given()
+                .with()
+                .filters(requestFilter, responseFiler)
+                .spec(getSpec())
+                .body(user)
+                .when()
+                .patch(PATH_CHANGE)
+                .then();
+    }
+
+
+    @Step("Delete user")
+    public ValidatableResponse deleteUser(String token) {
+        return given()
+                .with()
+                .filters(requestFilter, responseFiler)
+                .spec(getSpec())
+                .when()
+                .auth().oauth2(token)
+                .delete(PATH_DELETE)
                 .then();
     }
 }

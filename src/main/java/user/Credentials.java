@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Credentials {
 
-    private String login;
+    private String email;
     private String password;
 
     public static Credentials from (User user) {
-        return new Credentials(user.getLogin(), user.getPassword());
+        return new Credentials(user.getEmail(), user.getPassword());
     }
 }

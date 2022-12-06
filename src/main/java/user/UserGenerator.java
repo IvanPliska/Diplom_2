@@ -12,30 +12,38 @@ public class UserGenerator {
 
     @Step("Create new default user")
     public static User generateDefaultUser() {
-        String randomEmail = faker.name().name() + faker.numerify("123") + "@mail.com";
-        String randomPassword = faker.numerify("#######");
-        String randomLogin = faker.name().fullName();
-        return new User(randomEmail, randomPassword, randomLogin);
+        String randomEmail = faker.name().firstName() + "@mail.ru";
+        String randomPassword = faker.numerify("#####");
+        String randomLogin = faker.name().firstName();
+        return new User(randomLogin, randomPassword, randomEmail);
     }
 
     @Step("Create new user only password")
     public static User getWithPasswordOnly() {
-        String randomEmail = "";
-        String randomPassword = faker.numerify("#######");
-        String randomLogin = "";
-        return new User(randomEmail, randomPassword, randomLogin);
+        String randomEmail = " ";
+        String randomPassword = faker.numerify("###");
+        String randomLogin = " ";
+        return new User(randomLogin, randomPassword, randomEmail);
     }
 
     @Step("Create new user only login")
     public static User getWithLoginOnly() {
-        String randomEmail = "";
-        String randomPassword = "";
-        String randomLogin = faker.name().fullName();
-        return new User(randomEmail, randomPassword, randomLogin);
+        String randomEmail = " ";
+        String randomPassword = " ";
+        String randomLogin = faker.name().firstName();
+        return new User(randomLogin, randomPassword, randomEmail);
     }
 
     @Step("Create new user twice to login")
     public static User getDefaultCourierTwice() {
         return generateDefaultUser();
+    }
+
+    @Step("Change default user")
+    public static User generateChangeDefaultUser() {
+        String randomEmail = faker.name().firstName() + "@mail.ru";
+        String randomPassword = faker.numerify("#####");
+        String randomLogin = faker.name().firstName();
+        return new User(randomLogin, randomPassword, randomEmail);
     }
 }
