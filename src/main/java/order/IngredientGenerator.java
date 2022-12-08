@@ -1,7 +1,6 @@
 package order;
 
 import io.qameta.allure.Step;
-import user.User;
 
 import java.util.Random;
 
