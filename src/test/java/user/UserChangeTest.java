@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class UserChangeTest {
     private User user;
@@ -37,7 +37,7 @@ public class UserChangeTest {
         boolean isUserCreated = responseChange.extract().path("success");
         int statusCode = responseChange.extract().statusCode();
 
-        assertEquals("User changed is not ok", true, isUserCreated);
+        assertTrue("User changed is not ok", isUserCreated);
         assertEquals("User changed status code uncorrected", SC_OK, statusCode);
     }
 
@@ -51,7 +51,7 @@ public class UserChangeTest {
         int statusCode = responseChange.extract().statusCode();
         String actualMassage = responseChange.extract().path("message");
 
-        assertEquals("User changed is ok", false, isUserChanged);
+        assertFalse("User changed is ok", isUserChanged);
         assertEquals("User changed status code uncorrected", SC_UNAUTHORIZED, statusCode);
         assertEquals("User is change", "You should be authorised", actualMassage);
     }
